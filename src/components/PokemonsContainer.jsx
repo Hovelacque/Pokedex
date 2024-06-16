@@ -5,6 +5,7 @@ import fire from '../data/fire.json';
 import ice from '../data/ice.json';
 import { formatPokemonData } from "../utils/pokemon-helper";
 import Loader from './Loader';
+import { apiFetch } from '../utils/api-fetch';
 
 const PokemonsContainer = ({ type }) => {
     const [loading, setLoading] = useState(true);
@@ -20,10 +21,11 @@ const PokemonsContainer = ({ type }) => {
 
     const load = async () => {
         setLoading(true);
-        let pokemonList = fire.pokemon;
-        if (type == 'ice')
-            pokemonList = ice.pokemon
-        // const { pokemon: pokemonList } = await apiFetch(`/type/${type}`);
+        // let pokemonList = fire.pokemon;
+        // if (type == 'ice')
+        //     pokemonList = ice.pokemon
+        const { pokemon: pokemonList } = 
+        await apiFetch(`/type/${type}`);
 
         const novosPokemons = await Promise.all(
             pokemonList.map(async ({ pokemon }) => {

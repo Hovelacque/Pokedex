@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { getTypeIconSrc } from '../utils/pokemon-helper';
 
-import { results } from '../data/type.json';
+// import { results } from '../data/type.json';
+import { apiFetch } from '../utils/api-fetch';
 
 const TypesBar = ({ toggleType }) => {
     const [types, setTypes] = useState([]);
@@ -11,8 +12,11 @@ const TypesBar = ({ toggleType }) => {
     }, [])
 
     const load = async () => {
-        // const { results } = await apiFetch('/type');
-        setTypes(results)
+        const { results } = await apiFetch('/type');
+        const tipos = results
+        .filter(item => item.name !== 'unknown' &&
+             item.name !== 'shadow')
+        setTypes(tipos)
     }
 
     return (
